@@ -74,12 +74,15 @@ ActiveRecord::Schema.define(version: 2021_05_28_050745) do
   end
 
   create_table "locations", force: :cascade do |t|
+    t.bigint "location_type_id", null: false
     t.string "address"
     t.string "longitude"
     t.string "latitude"
     t.string "name"
+    t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["location_type_id"], name: "index_locations_on_location_type_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -117,6 +120,7 @@ ActiveRecord::Schema.define(version: 2021_05_28_050745) do
   add_foreign_key "favorites", "users"
   add_foreign_key "location_facilities", "facilities"
   add_foreign_key "location_facilities", "locations"
+  add_foreign_key "locations", "location_types"
   add_foreign_key "reviews", "locations"
   add_foreign_key "reviews", "users"
   add_foreign_key "trips", "users"
